@@ -1,5 +1,7 @@
 using LeaveManagement_6.Configurations;
+using LeaveManagement_6.Contracts;
 using LeaveManagement_6.Data;
+using LeaveManagement_6.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +24,8 @@ namespace LeaveManagement_6
 
 
             builder.Services.AddAutoMapper(typeof(MapperConfig));
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
 
             builder.Services.AddControllersWithViews();
 
