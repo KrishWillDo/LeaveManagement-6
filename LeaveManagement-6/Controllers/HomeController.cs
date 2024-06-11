@@ -1,4 +1,5 @@
 ﻿using LeaveManagement_6.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,7 +18,7 @@ namespace LeaveManagement_6.Controllers
         {
             return View();
         }
-
+        [Authorize(Roles = "Administrator")]
         public IActionResult Privacy()
         {
             return View();

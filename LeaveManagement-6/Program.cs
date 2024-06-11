@@ -2,7 +2,9 @@ using LeaveManagement_6.Configurations;
 using LeaveManagement_6.Contracts;
 using LeaveManagement_6.Data;
 using LeaveManagement_6.Repository;
+using LeaveManagement_6.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeaveManagement_6
@@ -20,8 +22,10 @@ namespace LeaveManagement_6
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            builder.Services.AddTransient<IEmailSender>(x => new EmailSender("smtp.freesmtpservers.com", 25, "no-reply@leavemngtTest.com"));
 
             builder.Services.AddAutoMapper(typeof(MapperConfig));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
