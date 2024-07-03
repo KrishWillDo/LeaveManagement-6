@@ -9,17 +9,22 @@ using LeaveManagement_6.Data;
 using AutoMapper;
 using LeaveManagement_6.Models;
 using LeaveManagement_6.Contracts;
+using Microsoft.AspNetCore.Identity;
 
 namespace LeaveManagement_6.Controllers
 {
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository leaveTypeRepository;
+        private readonly ILeaveAllocationRepository leaveAllocationRepository;
         private readonly IMapper mapper;
 
-        public LeaveTypesController(ILeaveTypeRepository leaveTypeRepository, IMapper mapper)
+        public LeaveTypesController(ILeaveTypeRepository leaveTypeRepository,
+                                    ILeaveAllocationRepository leaveAllocationRepository,
+                                    IMapper mapper)
         {
             this.leaveTypeRepository = leaveTypeRepository;
+            this.leaveAllocationRepository = leaveAllocationRepository;
             this.mapper = mapper;
         }
 
@@ -137,6 +142,16 @@ namespace LeaveManagement_6.Controllers
         private async Task<bool> LeaveTypeExists(int id)
         {
             return await leaveTypeRepository.Exists(id);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AllocateLeave(int id)
+        {
+            await leaveAllocationRepository.LeaveAllocation(id);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
