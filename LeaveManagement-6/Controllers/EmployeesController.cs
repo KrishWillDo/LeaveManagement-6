@@ -82,7 +82,7 @@ namespace LeaveManagement_6.Controllers
         // POST: EmployeesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAllocations(int id, EditLeaveAllocationVM model)
+        public async Task<IActionResult> EditAllocations(EditLeaveAllocationVM model)
         {
             try
             {

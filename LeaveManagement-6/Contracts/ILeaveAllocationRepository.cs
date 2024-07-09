@@ -12,5 +12,7 @@ namespace LeaveManagement_6.Contracts
         Task<EditLeaveAllocationVM> GetEmployeeLeaveAllocation(int Id);
 
         Task<bool> UpdateEmployeeAllocation(EditLeaveAllocationVM editLeaveAllocationVM);
+
+        Task<LeaveAllocation?> GetEmployeeAllocation(string employeeId, int leaveTypeId);
     }
 }

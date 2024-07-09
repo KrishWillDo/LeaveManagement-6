@@ -54,7 +54,7 @@ namespace LeaveManagement_6.Repository
                                       .Include(x => x.LeaveType)
                                       .FirstOrDefaultAsync(x => x.Id == Id);
 
-            if(allocation == null)
+            if (allocation == null)
             {
                 return null;
             }
@@ -111,6 +111,11 @@ namespace LeaveManagement_6.Repository
             await UpdateAsync(leaveAllocation);
 
             return true;
+        }
+
+        public async Task<LeaveAllocation?> GetEmployeeAllocation(string employeeId, int leaveTypeId)
+        {
+            return await dbContext.LeaveAllocations.FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.LeaveTypeId == leaveTypeId);
         }
     }
 }

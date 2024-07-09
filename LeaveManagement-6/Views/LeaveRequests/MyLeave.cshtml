@@ -1,0 +1,113 @@
+﻿@model LeaveRequestViewVM
+
+@{
+    ViewData["Title"] = "Leave Requests";
+}
+
+
+<h1>My Leave Allocations</h1>
+
+<div class="card">
+    <div class="card-header">
+        Leave Allocations
+    </div>
+    @if (Model.LeaveAllocations != null)
+    {
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model.LeaveAllocations)
+            {
+                <li class="list-group-item">
+                    @item.LeaveType.Name
+                    <button type="button" class="btn btn-primary">
+                        Allocated Days <span class="badge bg-secondary">@item.LeaveType.DefaultDays</span>
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Remaining Days <span class="badge bg-primary">@item.NumberOfDays</span>
+                    </button>                    
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+
+<h2>Current Leave Requests</h2>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    StartDate
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    LeaveType
+                </th>
+                <th>
+                    DateRequested
+                </th>
+                <th>
+                    RequestComments
+                </th>
+                <th>
+                    Approved
+                </th>
+
+                <th></th>
+
+            </tr>
+        </thead>
+        @if (Model.LeaveRequests != null)
+        {
+            <tbody>
+                @foreach (var item in Model.LeaveRequests)
+                {
+                    <tr>
+                        <td>
+                            @item.StartDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @item.EndDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @item.LeaveType.Name
+                        </td>
+                        <td>
+                            @item.DateRequested.ToShortDateString()
+                        </td>
+                        <td>
+                            @item.RequestComments
+                        </td>
+                        <td>
+                            @if (item.Cancelled)
+                            {
+                                <span class="badge bg-danger">Cancelled</span>
+                            }
+                            else if (item.Approved.GetValueOrDefault() == true)
+                            {
+                                <span class="badge bg-success">Approved</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">Pending</span>
+                            }
+                        </td>
+
+                        <td>
+                            @if (item.Approved == null && !item.Cancelled)
+                            {
+                                <a class="btn btn-danger" asp-action="CancelLeave" asp-route-id="@item.Id">Cancel</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+
+    </table>
+</div>
+

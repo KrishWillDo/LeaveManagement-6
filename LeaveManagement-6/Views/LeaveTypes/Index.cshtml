@@ -38,7 +38,7 @@
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     @*  <a asp-action="Delete" asp-route-id="@item.Id" id="deleteBtn">Delete</a> *@
                     <button type="button" class="btn btn-danger delete" id="deleteBtn" data-id="@item.Id">Delete</button>
-                    <button type="button" class="btn btn-primary" id="leaveAllocate" data-id="@item.Id">Allocate leave</button>
+                    <button type="button" class="btn btn-primary leaveallocate" id="leaveAllocate" data-id="@item.Id">Allocate leave</button>
                 </td>
             </tr>
         }
@@ -59,7 +59,7 @@
         $(function () {
             $(".delete").click(function () {
                 //debugger;
-                var currentID = $(this);
+                let currentID = $(this);
                 console.log(currentID);
                 swal({
                     title: "Are you sure ?",
@@ -78,9 +78,9 @@
             })
 
 
-            $("#leaveAllocate").click(function () {
-                debugger;
-                var currentID = $(this);
+            $(".leaveallocate").click(function () {
+                //debugger;
+                let currentID = $(this);
                 swal({
                     title: "Are you Sure?",
                     text: "you are allocation leave",
